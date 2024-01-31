@@ -2,7 +2,7 @@ window.onload = function () {
     const startButton = document.getElementById('start-button');
     const splashScreen = document.getElementById('splash-screen');
     const gameScreen = document.getElementById('game-screen');
-    const gameContainer = document.getElementById('game-container');
+    
     let monkey;
 
     startButton.addEventListener('click', function () {
@@ -12,9 +12,9 @@ window.onload = function () {
     function startGame() {
         splashScreen.style.display = 'none';
         gameScreen.style.display = 'flex';
-        gameContainer.style.display = 'none';
+        
 
-        gameScreen.style.backgroundImage = "url('./images/jungle2.png')";
+        gameScreen.style.backgroundImage = "url('../images/jungle2.png')";
 
         monkey = new Monkey(5);
 

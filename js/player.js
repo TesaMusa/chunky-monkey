@@ -1,5 +1,3 @@
-
-
 class Monkey {
     constructor(speed) {
       this.x = window.innerWidth / 2 - 25; 
@@ -12,29 +10,31 @@ class Monkey {
       this.element.style.height = '50px'; 
       document.body.appendChild(this.element);
 
-    
       this.element.style.left = `${this.x}px`;
       this.element.style.top = `${this.y}px`;
     }
-  
+
     moveLeft() {
       this.x -= this.speed;
       this.element.style.left = `${this.x}px`;
     }
-  
+
     moveRight() {
       this.x += this.speed;
       this.element.style.left = `${this.x}px`;
     }
-  
+
     moveUp() {
       this.y -= this.speed;
       this.element.style.top = `${this.y}px`;
     }
-  
+
     moveDown() {
       this.y += this.speed;
       this.element.style.top = `${this.y}px`;
     }
-  }
-  
+
+    show() {
+      this.element.style.display = 'block';
+    }
+}

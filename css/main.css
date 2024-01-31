@@ -1,0 +1,51 @@
+/* main.css */
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#splash-screen {
+  position: absolute;
+  height: 100vh;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: url('../images/splashscreen.png') no-repeat center center fixed;
+  background-size: cover;
+}
+
+#game-container, #start-button, #arrow-keys-container {
+  display: none;
+}
+
+#game-screen {
+  background-image: url('../images/jungle2.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+
+#monkey {
+
+  width: 50px;
+  height: 50px;
+  background-color: brown; 
+}
+
+
+
+/* Show start button and arrow keys only in splash screen  */
+#splash-screen #start-button,
+#splash-screen #arrow-keys-container {
+  display: block;
+}

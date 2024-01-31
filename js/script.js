@@ -49,7 +49,7 @@ window.onload = function () {
         });
 
         monkey.startCreatingEnemies();
-        //might need to be deleted
+       
         setInterval(changeArrowColors, 1000);
 
         function changeArrowColors() {

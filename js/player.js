@@ -81,10 +81,7 @@ class Monkey {
     }
 
     checkCollision(enemy) {
-        // Implement collision detection logic here
-        // For example, you can check if the monkey and enemy elements overlap
-        // Return true if there is a collision, otherwise return false
-        // You can use bounding box collision detection or other methods
+       
     }
 }
 

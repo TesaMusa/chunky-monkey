@@ -16,7 +16,7 @@ window.onload = function () {
 
         gameScreen.style.backgroundImage = "url('../images/jungle2.png')";
 
-        monkey = new Monkey(5);
+        monkey = new Monkey(20);
 
         startButton.style.display = 'none';
 
@@ -25,6 +25,9 @@ window.onload = function () {
 
       
         monkey.show();
+        setInterval(() => {
+            monkey.moveEnemies();
+        }, 100);
 
         window.addEventListener('keydown', function (event) {
             switch (event.key) {
@@ -40,9 +43,13 @@ window.onload = function () {
                 case 'ArrowDown':
                     monkey.moveDown();
                     break;
+                // case 'key_SPACE':
+                //     monkey.jump();
             }
         });
 
+        monkey.startCreatingEnemies();
+        //might need to be deleted
         setInterval(changeArrowColors, 1000);
 
         function changeArrowColors() {

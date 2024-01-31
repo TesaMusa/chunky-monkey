@@ -2,7 +2,7 @@ window.onload = function () {
     const startButton = document.getElementById('start-button');
     const splashScreen = document.getElementById('splash-screen');
     const gameScreen = document.getElementById('game-screen');
-    
+
     let monkey;
 
     startButton.addEventListener('click', function () {
@@ -12,7 +12,7 @@ window.onload = function () {
     function startGame() {
         splashScreen.style.display = 'none';
         gameScreen.style.display = 'flex';
-        
+
 
         gameScreen.style.backgroundImage = "url('../images/jungle2.png')";
 
@@ -23,10 +23,16 @@ window.onload = function () {
         const arrowKeysContainer = document.getElementById('arrow-keys-container');
         arrowKeysContainer.style.display = 'none';
 
-      
+
         monkey.show();
         setInterval(() => {
             monkey.moveEnemies();
+
+        }, 100);
+
+        setInterval(() => {
+            monkey.moveFood();
+
         }, 100);
 
         window.addEventListener('keydown', function (event) {
@@ -49,7 +55,8 @@ window.onload = function () {
         });
 
         monkey.startCreatingEnemies();
-       
+        monkey.startCreatingFood();
+
         setInterval(changeArrowColors, 1000);
 
         function changeArrowColors() {
@@ -59,7 +66,6 @@ window.onload = function () {
                 arrowKey.style.color = getRandomColor();
             });
         }
-
         function getRandomColor() {
             const letters = '0123456789ABCDEF';
             let color = '#';

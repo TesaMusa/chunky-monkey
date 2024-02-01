@@ -35,8 +35,8 @@ class Monkey {
 
         if (isCollision) {
             console.log('Collision detected');
-            this.hide(); 
-          
+            this.hide();
+
         }
 
         return isCollision;
@@ -149,66 +149,53 @@ class Monkey {
                 }
             }
         });
-    }
-    moveEnemies() {
-        this.enemies.forEach((enemy) => {
-            if (enemy.isVisible) {
-                if (this.checkCollision(enemy)) {
-                    this.hide(); 
-                    // Game over screen to be  added
-                }
-
-                if (enemy.direction === 'right') {
-                    enemy.x += enemy.speed;
-                    enemy.element.style.left = `${enemy.x}px`;
-
-                    if (enemy.x > window.innerWidth) {
-                        enemy.hide();
-                        enemy.reset();
-                    }
-                } else if (enemy.direction === 'left') {
-                    enemy.x -= enemy.speed;
-                    enemy.element.style.left = `${enemy.x}px`;
-
-                    if (enemy.x + 50 < 0) {
-                        enemy.hide();
-                        enemy.reset();
-                    }
-                }
-            }
-        });
-    }
-
+    }    
     moveFood() {
         this.food.forEach((banana) => {
             if (banana.isVisible) {
                 if (banana.direction === 'right') {
                     banana.x += banana.speed;
                     banana.element.style.left = `${banana.x}px`;
-
-
-                    if (banana.x > window.innerWidth) {
-                        banana.hide();
-                        banana.reset();
-                    }
                 } else if (banana.direction === 'left') {
                     banana.x -= banana.speed;
                     banana.element.style.left = `${banana.x}px`;
-
-
-                    if (banana.x + 50 < 0) {
-                        banana.hide();
-                        banana.reset();
-                    }
+                }
+    
+                if (this.checkFoodCollision(banana)) {
+                    console.log('Collision with banana!');
+                    banana.hide();
+                    banana.reset();
+                }
+    
+                if (banana.x > window.innerWidth || banana.x + 50 < 0) {
+                    banana.hide();
+                    banana.reset();
                 }
             }
         });
     }
-
+    
     checkFoodCollision(banana) {
+        const bananaRect = this.element.getBoundingClientRect();
+        const monkeyRect = banana.element.getBoundingClientRect();
+
+        const isCollision = (
+            bananaRect.x < monkeyRect.x + monkeyRect.width &&
+            bananaRect.x + bananaRect.width > monkeyRect.x &&
+            bananaRect.y < monkeyRect.y + monkeyRect.height &&
+            bananaRect.y + bananaRect.height > monkeyRect.y
+        );
+
+        if (isCollision) {
+            console.log('Collision detected');
+            banana.hide();
+            banana.reset();
+
+        }
+
+        return isCollision;
     }
 }
-
 
 class Enemy {
     constructor(speed) {
@@ -240,17 +227,17 @@ class Enemy {
         this.element.style.top = `${this.y}px`;
         this.show();
     }
-        checkCollision(monkey) {
-            const monkeyRect = monkey.element.getBoundingClientRect();
-            const enemyRect = this.element.getBoundingClientRect();
-    
-            return (
-                monkeyRect.x < enemyRect.x + enemyRect.width &&
-                monkeyRect.x + monkeyRect.width > enemyRect.x &&
-                monkeyRect.y < enemyRect.y + enemyRect.height &&
-                monkeyRect.y + monkeyRect.height > enemyRect.y
-            );
-        }
+    checkCollision(monkey) {
+        const monkeyRect = monkey.element.getBoundingClientRect();
+        const enemyRect = this.element.getBoundingClientRect();
+
+        return (
+            monkeyRect.x < enemyRect.x + enemyRect.width &&
+            monkeyRect.x + monkeyRect.width > enemyRect.x &&
+            monkeyRect.y < enemyRect.y + enemyRect.height &&
+            monkeyRect.y + monkeyRect.height > enemyRect.y
+        );
+    }
 }
 
 class Food {

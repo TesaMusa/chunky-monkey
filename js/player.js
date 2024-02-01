@@ -18,6 +18,29 @@ class Monkey {
         this.food = [];
 
     }
+    hide() {
+        this.element.style.display = 'none';
+    }
+
+    checkCollision(enemy) {
+        const monkeyRect = this.element.getBoundingClientRect();
+        const enemyRect = enemy.element.getBoundingClientRect();
+
+        const isCollision = (
+            monkeyRect.x < enemyRect.x + enemyRect.width &&
+            monkeyRect.x + monkeyRect.width > enemyRect.x &&
+            monkeyRect.y < enemyRect.y + enemyRect.height &&
+            monkeyRect.y + monkeyRect.height > enemyRect.y
+        );
+
+        if (isCollision) {
+            console.log('Collision detected');
+            this.hide(); 
+          
+        }
+
+        return isCollision;
+    }
 
     moveLeft() {
         this.x -= this.speed;
@@ -127,32 +150,33 @@ class Monkey {
             }
         });
     }
+    moveEnemies() {
+        this.enemies.forEach((enemy) => {
+            if (enemy.isVisible) {
+                if (this.checkCollision(enemy)) {
+                    this.hide(); 
+                    // Game over screen to be  added
+                }
 
+                if (enemy.direction === 'right') {
+                    enemy.x += enemy.speed;
+                    enemy.element.style.left = `${enemy.x}px`;
 
+                    if (enemy.x > window.innerWidth) {
+                        enemy.hide();
+                        enemy.reset();
+                    }
+                } else if (enemy.direction === 'left') {
+                    enemy.x -= enemy.speed;
+                    enemy.element.style.left = `${enemy.x}px`;
 
-
-    checkCollision(enemy) {
-        const monkeyLeft = this.x;
-        const monkeyRight = this.x + 50;
-        const monkeyTop = this.y;
-        const monkeyBottom = this.y + 50;
-
-        const enemyLeft = enemy.x;
-        const enemyRight = enemy.x + 50;
-        const enemyTop = enemy.y;
-        const enemyBottom = enemy.y + 50;
-
-        const collision =
-            monkeyLeft < enemyRight &&
-            monkeyRight > enemyLeft &&
-            monkeyTop < enemyBottom &&
-            monkeyBottom > enemyTop;
-
-        if (collision) {
-            this.hide();
-        }
-
-        return collision;
+                    if (enemy.x + 50 < 0) {
+                        enemy.hide();
+                        enemy.reset();
+                    }
+                }
+            }
+        });
     }
 
     moveFood() {
@@ -168,7 +192,7 @@ class Monkey {
                         banana.reset();
                     }
                 } else if (banana.direction === 'left') {
-                    enbananaemy.x -= banana.speed;
+                    banana.x -= banana.speed;
                     banana.element.style.left = `${banana.x}px`;
 
 
@@ -199,20 +223,16 @@ class Enemy {
         this.element.style.width = '50px';
         this.element.style.height = '50px';
         document.body.appendChild(this.element);
-
         this.hide();
     }
-
     show() {
         this.isVisible = true;
         this.element.style.display = 'block';
     }
-
     hide() {
         this.isVisible = false;
         this.element.style.display = 'none';
     }
-
     reset() {
         this.x = Math.random() * (window.innerWidth - 50);
         this.y = Math.random() * -100;
@@ -220,8 +240,18 @@ class Enemy {
         this.element.style.top = `${this.y}px`;
         this.show();
     }
+        checkCollision(monkey) {
+            const monkeyRect = monkey.element.getBoundingClientRect();
+            const enemyRect = this.element.getBoundingClientRect();
+    
+            return (
+                monkeyRect.x < enemyRect.x + enemyRect.width &&
+                monkeyRect.x + monkeyRect.width > enemyRect.x &&
+                monkeyRect.y < enemyRect.y + enemyRect.height &&
+                monkeyRect.y + monkeyRect.height > enemyRect.y
+            );
+        }
 }
-
 
 class Food {
     constructor(speed) {
@@ -236,10 +266,8 @@ class Food {
         this.element.style.width = '50px';
         this.element.style.height = '50px';
         document.body.appendChild(this.element);
-
         this.hide();
     }
-
     show() {
         this.isVisible = true;
         this.element.style.display = 'block';

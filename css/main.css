@@ -44,3 +44,6 @@ body {
 #splash-screen #arrow-keys-container {
   display: block;
 }
+#game-over-screen{
+  display: none;
+}

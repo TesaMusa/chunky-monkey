@@ -14,7 +14,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: url('../images/splashscreen.png') no-repeat center center fixed;
+  background: url('./images/splashscreen.png') no-repeat center center fixed;
   background-size: cover;
 }
 
@@ -23,7 +23,7 @@ body {
 }
 
 #game-screen {
-  background-image: url('../images/jungle1.png');
+  background-image: url('./images/jungle1.png');
   background-size: cover;
   height: 100vh;
   width: 100%;
@@ -48,7 +48,7 @@ body {
 }
 
 #game-over {
-  background-image: url('../images/jungle1.png');
+  background-image: url('./images/jungle1.png');
   background-size: cover;
   height: 100vh;
   width: 100%;

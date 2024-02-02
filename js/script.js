@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function startGame() {
         splashScreen.style.display = 'none';
         gameScreen.style.display = 'flex';
-        gameScreen.style.backgroundImage = "url('../images/jungle1.png')";
+        gameScreen.style.backgroundImage = "url('./images/jungle1.png')";
 
         monkey = new Monkey(20,handleGameOver);
         

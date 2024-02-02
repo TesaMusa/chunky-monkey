@@ -290,7 +290,7 @@ class Food {
         this.isVisible = false;
 
         this.element = document.createElement('img');
-        this.element.src = '../images/food.png';
+        this.element.src = './images/food.png';
         this.element.style.position = 'absolute';
         this.element.style.width = '50px';
         this.element.style.height = '50px';

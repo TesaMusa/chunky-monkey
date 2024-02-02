@@ -1,29 +1,34 @@
+
+//Function to make sure the html is rendered and just then js intereacts
 document.addEventListener('DOMContentLoaded', function () {
     const startButton = document.getElementById('start-button');
     const splashScreen = document.getElementById('splash-screen');
     const gameScreen = document.getElementById('game-screen');
-  
 
+    //Declare a variable that will hold an instanc of the Monkey class
     let monkey;
 
+    //Listens for a click button to start the game
     startButton.addEventListener('click', function () {
         startGame();
     });
+
+    //Function to hide the splash screen and it's element and display the game-screen
 
     function startGame() {
         splashScreen.style.display = 'none';
         gameScreen.style.display = 'flex';
         gameScreen.style.backgroundImage = "url('./images/jungle1.png')";
 
-        monkey = new Monkey(20,handleGameOver);
-        
+        monkey = new Monkey(20, handleGameOver);
+
         startButton.style.display = 'none';
 
         const arrowKeysContainer = document.getElementById('arrow-keys-container');
         arrowKeysContainer.style.display = 'none';
-
+        //Shows the monkey in the game
         monkey.show();
-
+        //Sets certain interval to move the enemies
         setInterval(() => {
             monkey.moveEnemies();
         }, 100);
@@ -31,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
         setInterval(() => {
             monkey.moveFood();
         }, 100);
-
+        //Listens for keyboard events
         window.addEventListener('keydown', function (event) {
             switch (event.key) {
                 case 'ArrowLeft':
@@ -70,8 +75,9 @@ document.addEventListener('DOMContentLoaded', function () {
             return color;
         }
 
-        
+
     }
+    //Function to handle the gam over logic, using localStorage to store the score and the lives
     function handleGameOver() {
         localStorage.setItem('lives-remaining', monkey.lives);
         localStorage.setItem('score', monkey.bananaCounter);
@@ -79,5 +85,5 @@ document.addEventListener('DOMContentLoaded', function () {
         window.location.href = 'game-over.html';
     }
 
-   
+
 });

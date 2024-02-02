@@ -1,7 +1,8 @@
-window.onload = function () {
+document.addEventListener('DOMContentLoaded', function () {
     const startButton = document.getElementById('start-button');
     const splashScreen = document.getElementById('splash-screen');
     const gameScreen = document.getElementById('game-screen');
+  
 
     let monkey;
 
@@ -12,27 +13,23 @@ window.onload = function () {
     function startGame() {
         splashScreen.style.display = 'none';
         gameScreen.style.display = 'flex';
+        gameScreen.style.backgroundImage = "url('../images/jungle1.png')";
 
-
-        gameScreen.style.backgroundImage = "url('../images/jungle2.png')";
-
-        monkey = new Monkey(20);
-
+        monkey = new Monkey(20,handleGameOver);
+        
         startButton.style.display = 'none';
 
         const arrowKeysContainer = document.getElementById('arrow-keys-container');
         arrowKeysContainer.style.display = 'none';
 
-
         monkey.show();
+
         setInterval(() => {
             monkey.moveEnemies();
-
         }, 100);
 
         setInterval(() => {
             monkey.moveFood();
-
         }, 100);
 
         window.addEventListener('keydown', function (event) {
@@ -49,8 +46,6 @@ window.onload = function () {
                 case 'ArrowDown':
                     monkey.moveDown();
                     break;
-                // case 'key_SPACE':
-                //     monkey.jump();
             }
         });
 
@@ -61,11 +56,11 @@ window.onload = function () {
 
         function changeArrowColors() {
             const arrowKeys = document.querySelectorAll('.arrow-key');
-
             arrowKeys.forEach((arrowKey) => {
                 arrowKey.style.color = getRandomColor();
             });
         }
+
         function getRandomColor() {
             const letters = '0123456789ABCDEF';
             let color = '#';
@@ -74,5 +69,15 @@ window.onload = function () {
             }
             return color;
         }
+
+        
     }
-};
+    function handleGameOver() {
+        localStorage.setItem('lives-remaining', monkey.lives);
+        localStorage.setItem('score', monkey.bananaCounter);
+
+        window.location.href = 'game-over.html';
+    }
+
+   
+});

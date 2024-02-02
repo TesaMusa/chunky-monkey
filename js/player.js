@@ -1,27 +1,37 @@
 class Monkey {
-    constructor(speed) {
+    constructor(speed, gameOverCallback) {
         this.x = window.innerWidth / 2 - 25;
         this.y = window.innerHeight - 50;
         this.speed = speed;
         this.element = document.createElement('img');
         this.element.src = '../images/monkey.png';
         this.element.style.position = 'absolute';
-        this.element.style.width = '50px';
-        this.element.style.height = '50px';
+        this.element.style.width = '100px';
+        this.element.style.height = '100px';
         document.body.appendChild(this.element);
 
         this.element.style.left = `${this.x}px`;
         this.element.style.top = `${this.y}px`;
-
-
         this.enemies = [];
         this.food = [];
+        this.bananaCounter = 0;
+        this.lives = 3;
+        this.gameOverCallback = gameOverCallback;
+
 
     }
+    resetPosition() {
+        this.x = window.innerWidth / 2 - 25;
+        this.y = window.innerHeight - 50;
+        this.element.style.left = `${this.x}px`;
+        this.element.style.top = `${this.y}px`;
+        this.show();
+
+    }
+
     hide() {
         this.element.style.display = 'none';
     }
-
     checkCollision(enemy) {
         const monkeyRect = this.element.getBoundingClientRect();
         const enemyRect = enemy.element.getBoundingClientRect();
@@ -36,10 +46,28 @@ class Monkey {
         if (isCollision) {
             console.log('Collision detected');
             this.hide();
+            this.gameOverCallback();
+
 
         }
-
         return isCollision;
+    }
+
+    gameOver() {
+        console.log("Game Over");
+        this.lives--;
+
+        const livesTotal = document.getElementById("lives-remaining");
+        livesTotal.innerText = this.lives;
+
+        if (this.lives === 0) {
+            if (this.gameOverCallback) {
+
+                this.gameOverCallback(this.lives, this.bananaCounter);
+            }
+        } else {
+            this.resetPosition();
+        }
     }
 
     moveLeft() {
@@ -96,7 +124,7 @@ class Monkey {
             foodCreate++;
 
             if (foodCreate < maxFoodPerMinute) {
-                setTimeout(foodCreate, creationInterval);
+                setTimeout(createFood, creationInterval);
             }
         };
 
@@ -149,7 +177,7 @@ class Monkey {
                 }
             }
         });
-    }    
+    }
     moveFood() {
         this.food.forEach((banana) => {
             if (banana.isVisible) {
@@ -160,13 +188,13 @@ class Monkey {
                     banana.x -= banana.speed;
                     banana.element.style.left = `${banana.x}px`;
                 }
-    
+
                 if (this.checkFoodCollision(banana)) {
                     console.log('Collision with banana!');
                     banana.hide();
                     banana.reset();
                 }
-    
+
                 if (banana.x > window.innerWidth || banana.x + 50 < 0) {
                     banana.hide();
                     banana.reset();
@@ -174,7 +202,7 @@ class Monkey {
             }
         });
     }
-    
+
     checkFoodCollision(banana) {
         const bananaRect = this.element.getBoundingClientRect();
         const monkeyRect = banana.element.getBoundingClientRect();
@@ -190,13 +218,15 @@ class Monkey {
             console.log('Collision detected');
             banana.hide();
             banana.reset();
-
+            this.bananaCounter++;
+            console.log(`You have collected ${this.bananaCounter} !`);
         }
-
         return isCollision;
     }
+
 }
 
+//END THE GAME 
 class Enemy {
     constructor(speed) {
         this.x = 0;
@@ -207,10 +237,11 @@ class Enemy {
         this.element = document.createElement('img');
         this.element.src = '../images/enemy1.png';
         this.element.style.position = 'absolute';
-        this.element.style.width = '50px';
-        this.element.style.height = '50px';
+        this.element.style.width = '100px';
+        this.element.style.height = '100px';
         document.body.appendChild(this.element);
         this.hide();
+
     }
     show() {
         this.isVisible = true;
@@ -231,13 +262,21 @@ class Enemy {
         const monkeyRect = monkey.element.getBoundingClientRect();
         const enemyRect = this.element.getBoundingClientRect();
 
-        return (
+        const isCollision = (
             monkeyRect.x < enemyRect.x + enemyRect.width &&
             monkeyRect.x + monkeyRect.width > enemyRect.x &&
             monkeyRect.y < enemyRect.y + enemyRect.height &&
             monkeyRect.y + monkeyRect.height > enemyRect.y
         );
+
+        if (isCollision) {
+            console.log('Collision detected');
+            this.hide();
+            monkey.gameOver();
+        }
+        return isCollision;
     }
+
 }
 
 class Food {
@@ -273,3 +312,5 @@ class Food {
         this.show();
     }
 }
+
+

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/main.css">
+    <title>Game Over</title>
+</head>
+
+<body>
+    <div id="game-over">
+        <h1>Game Over</h1>
+        <div>
+            <strong>Lives Remaining:</strong>
+            <span id="lives-remaining">0</span>
+        </div>
+        <div>
+            <strong>Bananas Collected:</strong>
+            <span id="bananas-collected">0</span>
+        </div>
+    </div>
+    <script>
+       
+        const livesRemaining = localStorage.getItem('lives-Remaining');
+        const score = localStorage.getItem('score');
+    
+       
+        document.getElementById('lives-remaining').innerText = livesRemaining;
+        document.getElementById('bananas-collected').innerText = score;
+    </script>
+
+    <script src="../js/script.js"></script>
+</body>
+
+</html>

@@ -4,7 +4,7 @@ class Monkey {
         this.y = window.innerHeight - 50;
         this.speed = speed;
         this.element = document.createElement('img');
-        this.element.src = '../images/monkey.png';
+        this.element.src = './images/monkey.png';
         this.element.style.position = 'absolute';
         this.element.style.width = '100px';
         this.element.style.height = '100px';
@@ -20,6 +20,7 @@ class Monkey {
 
 
     }
+    //Function to reset the position of the monkey to the starting point
     resetPosition() {
         this.x = window.innerWidth / 2 - 25;
         this.y = window.innerHeight - 50;
@@ -28,10 +29,11 @@ class Monkey {
         this.show();
 
     }
-
+ //Function to hide the monkey
     hide() {
         this.element.style.display = 'none';
     }
+    //Function to check the collision between the monkey and the enemy, if there is a collision it outputs in the console, hides the monkey and triger the gameOverCallback
     checkCollision(enemy) {
         const monkeyRect = this.element.getBoundingClientRect();
         const enemyRect = enemy.element.getBoundingClientRect();
@@ -52,7 +54,7 @@ class Monkey {
         }
         return isCollision;
     }
-
+    //Function to handle the logic when the game is over
     gameOver() {
         console.log("Game Over");
         this.lives--;
@@ -69,30 +71,32 @@ class Monkey {
             this.resetPosition();
         }
     }
-
+    //moves the monkey to the left
     moveLeft() {
         this.x -= this.speed;
         this.element.style.left = `${this.x}px`;
     }
-
+    //moves the monkey to the right
     moveRight() {
         this.x += this.speed;
         this.element.style.left = `${this.x}px`;
     }
-
+    //moves the monkey up
     moveUp() {
         this.y -= this.speed;
         this.element.style.top = `${this.y}px`;
     }
-
+    //moves the monkey down
     moveDown() {
         this.y += this.speed;
         this.element.style.top = `${this.y}px`;
     }
+    //Shows the monkey
 
     show() {
         this.element.style.display = 'block';
     }
+    //Function used to create enenemies at a specific rate
     startCreatingEnemies() {
         let enemiesCreated = 0;
         const maxEnemiesPerMinute = 10;
@@ -111,7 +115,7 @@ class Monkey {
 
         createEnemy();
     }
-    //FOOD
+    //Function used to create food in this game bananas at a specific rate
     startCreatingFood() {
         let foodCreate = 0;
         const maxFoodPerMinute = 10;
@@ -130,7 +134,7 @@ class Monkey {
 
         createFood();
     }
-
+    //Function to position enemies item on the screen
     positionEnemies() {
         this.enemies.forEach((enemy) => {
 
@@ -141,7 +145,7 @@ class Monkey {
             enemy.show();
         });
     }
-
+//Function to position food item on the screen
     positionFood() {
         this.food.forEach((banana) => {
 
@@ -152,7 +156,7 @@ class Monkey {
             banana.show();
         });
     }
-
+    //Moves enemies  on the screen and checks for collision with the main character in this case with the monkey, hides and removes enemies 
     moveEnemies() {
         this.enemies.forEach((enemy) => {
             if (enemy.isVisible) {
@@ -178,6 +182,7 @@ class Monkey {
             }
         });
     }
+    //Moves food  on the screen and checks for collision with the main character in this case with the monkey, hides and removes food accordingly 
     moveFood() {
         this.food.forEach((banana) => {
             if (banana.isVisible) {
@@ -225,8 +230,6 @@ class Monkey {
     }
 
 }
-
-//END THE GAME 
 class Enemy {
     constructor(speed) {
         this.x = 0;
@@ -235,7 +238,7 @@ class Enemy {
         this.isVisible = false;
 
         this.element = document.createElement('img');
-        this.element.src = '../images/enemy1.png';
+        this.element.src = './images/enemy1.png';
         this.element.style.position = 'absolute';
         this.element.style.width = '100px';
         this.element.style.height = '100px';

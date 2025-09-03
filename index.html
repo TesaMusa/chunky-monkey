@@ -12,7 +12,7 @@
 <body>
     <div id="splash-screen">
         <br />
-        <p>Score: <span id="score">0</span></p>
+        <p>High Score: <span id="score">0</span></p>
         <p>Move the Chunky Monkey by using arrow keys up, down, left, and right!</p>
         <button id="start-button">Start Game</button>
         <div id="arrow-keys-container" class="arrows">
@@ -23,12 +23,31 @@
         </div>
     </div>
 
-    <div id="game-screen">     
+    <div id="game-screen">
+        <!-- Live game HUD -->
+        <div id="game-hud">
+            <div id="live-score">Score: 0</div>
+            <div id="live-lives">Lives: 3</div>
+            <div id="pause-hint">Press SPACE to pause</div>
+        </div>
+        
+        <!-- Pause Screen -->
+        <div id="pause-screen" style="display: none;">
+            <div id="pause-content">
+                <h2>⏸️ GAME PAUSED</h2>
+                <p>Press SPACE to continue</p>
+                <div id="pause-instructions">
+                    <p>🎮 Controls:</p>
+                    <p>Arrow Keys - Move</p>
+                    <p>Space - Pause/Unpause</p>
+                </div>
+            </div>
+        </div>     
     </div>
 
   
     <script src="./js/script.js"></script>
-    <script src="./js/player.js " defer></script>
+    <script src="./js/player.js" defer></script>
    
 </body>
 
